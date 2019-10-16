@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <layout-header/>
+    <router-view/>
   </div>
 </template>
-
+<script>
+import LayoutHeader from "@/components/LayoutHeader.vue";
+export default {
+  components: {
+    LayoutHeader
+  }
+}
+</script>
 <style lang="scss">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

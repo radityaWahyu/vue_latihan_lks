@@ -1,6 +1,7 @@
 <template>
   <b-container>
     <h3>Ini halaman 1</h3>
+    <b-button variant="primary" class="mb-4" :to="{ name:'addBarang' }">Tambah Data</b-button>
     <b-table
       striped
       hover

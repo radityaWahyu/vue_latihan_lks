@@ -16,6 +16,11 @@ export default new Router({
       path: "/hal2",
       name: "halamanDua",
       component: () =>import("./views/HalamanDua.vue")
+    },
+    {
+      path: "/barang/add",
+      name: "addBarang",
+      component: () => import("./views/ItemForm.vue")
     }
   ]
 });

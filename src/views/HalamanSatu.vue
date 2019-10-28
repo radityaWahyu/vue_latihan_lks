@@ -12,8 +12,8 @@
         <strong>{{row.value}}</strong>
       </template>
        <template v-slot:cell(aksi)="row">
-        <b-button class="mx-1">Edit</b-button>
-        <b-button class="mx-1" variant="danger">Hapus</b-button>
+        <b-button class="mx-1" :to="{name: 'editBarang',params: { id: row.item.item_id }}">Edit </b-button>
+        <b-button class="mx-1" variant="danger" @click="hapus(row.item.item_id)">Hapus</b-button>
        </template>
     </b-table>
   </b-container>  
@@ -62,6 +62,21 @@ export default {
       }).then((response) => {
         console.log(response);
         this.produk = response.data.data;
+      });
+    },
+    hapus(id) {
+      this.$http.delete(`${this.url}product/${id}`,{
+        headers: {
+          "Authorization":`Bearer ${this.token}`
+        }
+      }).then((response) => {
+        console.log(response);
+        if(response.data.status === "success") {
+          alert("Data berhasil dihapus");
+          this.ambilData();
+        } else {
+          alert("Data gagal dihapus");
+        }
       });
     }
   }

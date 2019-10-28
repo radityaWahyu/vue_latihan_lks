@@ -59,31 +59,85 @@ export default {
       images: "",
       stock: "",
       url: process.env.VUE_APP_API_URL,
-      token: localStorage.getItem("token")
+      token: localStorage.getItem("token"),
+      isEdit: false
+    }
+  },
+  created() {
+    //console.log(this.$route.params.id);
+  },
+  watch: {
+    "$route.params.id": {
+      deep: true,
+      immediate: true,
+      handler: function(value) {
+        if(value !== undefined) {
+          this.isEdit = true;
+          //taruh fungsi mengeluarkan spinner
+          this.$http.get(`${this.url}product/${value}`,{
+            headers: {
+              "Authorization":`Bearer ${this.token}`
+            }
+          }).then((response)=>{
+            //console.log(response);
+            
+            this.name = response.data.data.name;
+            this.price = response.data.data.price;
+            this.description = response.data.data.description;
+            this.images = response.data.data.image;
+            this.stock = response.data.data.stock;
+            //taruh fungsi menghilangkan spinner
+          });
+        } else {
+          this.isEdit = false;
+        }
+      }
     }
   },
   methods: {
     onSubmit() {
-      
-      this.$http.post(`${this.url}product`,
-      {
-        name: this.name,
-        description: this.description,
-        price: this.price,
-        stock: this.stock,
-        image: this.images
-      },
-      {
-        headers: {
-          "Authorization":`Bearer ${this.token}`
-        }
-      }).then((response) => {
-        if(response.data.status === "success" ) {
-          this.$router.push({name: "halamanSatu"});
-        }else{
-          alert("gagal disimpan");
-        }
-      });
+      if(this.isEdit === true) {
+        let id = this.$route.params.id;
+        this.$http.patch(`${this.url}product/${id}`,
+        {
+          name: this.name,
+          description: this.description,
+          price: this.price,
+          stock: this.stock,
+          image: this.images
+        },
+        {
+          headers: {
+            "Authorization":`Bearer ${this.token}`
+          }
+        }).then((response) => {
+          if(response.data.status === "success" ) {
+            this.$router.push({name: "halamanSatu"});
+          }else{
+            alert("gagal disimpan");
+          }
+        });
+      } else {
+        this.$http.post(`${this.url}product`,
+        {
+          name: this.name,
+          description: this.description,
+          price: this.price,
+          stock: this.stock,
+          image: this.images
+        },
+        {
+          headers: {
+            "Authorization":`Bearer ${this.token}`
+          }
+        }).then((response) => {
+          if(response.data.status === "success" ) {
+            this.$router.push({name: "halamanSatu"});
+          }else{
+            alert("gagal disimpan");
+          }
+        });
+      }
     }
   } 
 }

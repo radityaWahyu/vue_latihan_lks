@@ -21,6 +21,11 @@ export default new Router({
       path: "/barang/add",
       name: "addBarang",
       component: () => import("./views/ItemForm.vue")
+    },
+    {
+      path: "/barang/edit/:id",
+      name: "editBarang",
+      component: () => import("./views/ItemForm.vue")
     }
   ]
 });

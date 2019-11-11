@@ -19,6 +19,7 @@
   </b-container>  
 </template>
 <script>
+import { mapGetters } from "vuex"
 export default {
   name: "HalamanSatu",
   data() {
@@ -47,8 +48,20 @@ export default {
     }
   },
   created() {
-    
-    this.ambilData();
+    //console.log(this.isAuth);
+    if(this.isAuth){
+      this.ambilData();
+    } else {
+      this.$router.push({name: "login"});
+    }
+
+   
+  },
+  computed: {
+    ...mapGetters({
+      isAuth: "auth/isAuth",
+      user: "auth/getUser"
+    })
   },
   mounted() {
     //console.log("mounted");

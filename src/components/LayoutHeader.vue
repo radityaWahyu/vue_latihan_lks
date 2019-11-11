@@ -10,11 +10,18 @@
         <b-nav-item :to="{ name: 'halamanDua' }">Halaman 2</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
+    <h4>{{ user.name }}</h4>
   </b-navbar>
 </template>
 <script>
+import { mapGetters } from "vuex"
 export default {
-  name: "LayoutHeader"
+  name: "LayoutHeader",
+  computed: {
+    ...mapGetters({
+      user: "auth/getUser"
+    })
+  }
 }
 </script>
 <style lang="scss" scoped>

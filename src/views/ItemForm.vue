@@ -106,6 +106,7 @@ export default {
           stock: this.stock,
           image: this.images
         },
+        
         {
           headers: {
             "Authorization":`Bearer ${this.token}`

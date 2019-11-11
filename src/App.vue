@@ -1,14 +1,25 @@
 <template>
   <div id="app">
-    <layout-header/>
+    <layout-header v-if="isAuth"/>
     <router-view/>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex"
 import LayoutHeader from "@/components/LayoutHeader.vue";
 export default {
+  computed: {
+    ...mapGetters({
+      isAuth: "auth/isAuth",
+      user: "auth/getUser",
+      url: "api/getUrl"
+    })
+  },
   components: {
     LayoutHeader
+  },
+  created() {
+   
   }
 }
 </script>
